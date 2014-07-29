@@ -1,11 +1,12 @@
 var optimist = require('optimist');
 var fs = require('fs');
 var path = require('path');
-var merge = require('deepmerge');
+var defaultMerge = require('deepmerge');
 
 var existsSync = fs.existsSync || path.existsSync;
 
-module.exports = function (configFile, argv) {
+module.exports = function (configFile, argv, opts) {
+    var merge = (opts && opts.mergeImplementation) || defaultMerge;
     if (Array.isArray(argv)) {
         argv = optimist.parse(argv);
     }
